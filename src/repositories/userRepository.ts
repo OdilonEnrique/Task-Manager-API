@@ -20,4 +20,18 @@ export const userRepository = {
       throw error;
     }
   },
+
+  async getUserByEmail(email: string) {
+    try {
+      const db = await sqliteConnnection();
+
+      const querySQL = "SELECT * FROM users WHERE email = ?;";
+
+      const user = await db.run(querySQL, [email]);
+
+      return user;
+    } catch (error) {
+      throw error;
+    }
+  },
 };
