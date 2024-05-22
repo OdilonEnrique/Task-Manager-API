@@ -12,7 +12,16 @@ export const authControllers = {
         { email, password },
         userRepository
       );
-      return res.status(200).json({ message: "User logged in" });
+
+      res.cookie(process.env.KEY_TOKEN, token, {
+        httpOnly: true,
+        sameSite: "none",
+        secure: true,
+        maxAge: 1000 * 60 * 60 * 18, // 18h
+
+      })
+
+      return res.status(200).json({ message: "User logged in"});
     } catch (error) {
       return next(error);
     }

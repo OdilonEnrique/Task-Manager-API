@@ -27,7 +27,7 @@ export const userRepository = {
 
       const querySQL = "SELECT * FROM users WHERE email = ?;";
 
-      const user = await db.run(querySQL, [email]);
+      const user = await db.get(querySQL, [email]);
 
       return user;
     } catch (error) {
