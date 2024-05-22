@@ -4,4 +4,4 @@ import { authMiddleware } from "../middlewares/authMiddleware";
 
 export const taskRoutes = Router();
 
-taskRoutes.post("/tasks", authMiddleware, taskControllers.create);
+taskRoutes.post("/task", authMiddleware, taskControllers.create);
