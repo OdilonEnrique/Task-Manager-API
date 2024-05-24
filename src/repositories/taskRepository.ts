@@ -34,4 +34,36 @@ export const taskRepository = {
       throw error;
     }
   },
+
+  async updateTask(data: CreateTaskType) {
+    try {
+      const { id, title, description, date, status } = data;
+
+      const db = await sqliteConnnection();
+
+      const querySQL = `UPDATE tasks 
+        SET title = ?, description = ?, date = ?, status = ? 
+        WHERE id = ?;`;
+
+      await db.run(querySQL, [title, description, date, status, id]);
+
+      return { id };
+    } catch (error) {
+      throw error;
+    }
+  },
+  
+  async deleteTask(id: string) {
+    try {
+      const db = await sqliteConnnection();
+
+      const querySQL = "DELETE FROM tasks WHERE id = ?;";
+
+      await db.run(querySQL, [id]);
+
+      return { id };
+    } catch (error) {
+      throw error;
+    }
+  },
 };
