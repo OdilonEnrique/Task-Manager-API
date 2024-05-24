@@ -26,9 +26,8 @@ export const taskSchema = z
       .datetime({ message: "date must be UTC format!" }),
 
     status: z.enum(["pending", "completed"], {
-      required_error: "password is required",
-      invalid_type_error: "password must be a 'pending' or 'completed'!",
-
+      required_error: "status is required",
+      invalid_type_error: "status must be a 'pending' or 'completed'!",
     }),
   })
   .strict();

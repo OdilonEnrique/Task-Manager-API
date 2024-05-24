@@ -1,5 +1,8 @@
 import { sqliteConnnection } from "../database/sqlite3";
-import { CreateTaskDataTypes } from "../services/taskServices";
+import {
+  CreateTaskDataTypes,
+  UserTasksPagination,
+} from "../services/taskServices";
 
 export type CreateTaskType = CreateTaskDataTypes & { id: string };
 
@@ -52,7 +55,7 @@ export const taskRepository = {
       throw error;
     }
   },
-  
+
   async deleteTask(id: string) {
     try {
       const db = await sqliteConnnection();
@@ -62,6 +65,45 @@ export const taskRepository = {
       await db.run(querySQL, [id]);
 
       return { id };
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  async getTasks(data: UserTasksPagination) {
+    try {
+      const { userID, limit, offset, filter } = data;
+
+      const db = await sqliteConnnection();
+
+      if (filter == "all") {
+        const querySQL = `
+        SELECT * FROM tasks 
+        WHERE id_user = ?
+        ORDER BY created_at DESC
+        LIMIT ? OFFSET ?;
+        `;
+
+        const userTasks = await db.all(querySQL, [userID, limit, offset]);
+
+        return userTasks;
+      } else {
+        const querySQL = `
+      SELECT * FROM tasks 
+      WHERE id_user = ? AND status = ?
+      ORDER BY created_at DESC
+      LIMIT ? OFFSET ?;
+      `;
+
+        const userTasks = await db.all(querySQL, [
+          userID,
+          filter,
+          limit,
+          offset,
+        ]);
+
+        return userTasks;
+      }
     } catch (error) {
       throw error;
     }
