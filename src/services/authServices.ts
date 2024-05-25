@@ -17,11 +17,11 @@ export const authServices = {
 
       if (!passwordCheck) throw appError("email or password invalid", 401);
 
-      const token = sign({id: user.id}, process.env.SECRET_TOKEN, {
-        expiresIn: process.env.EXPIRESIN_TOKEN
-      })
+      const token = sign({ id: user.id }, process.env.SECRET_TOKEN, {
+        expiresIn: process.env.EXPIRESIN_TOKEN,
+      });
 
-      return token;
+      return { token };
     } catch (error) {
       throw error;
     }
