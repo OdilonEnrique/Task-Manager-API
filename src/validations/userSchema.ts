@@ -4,7 +4,7 @@ export const userSchema = z
   .object({
     name: z
       .string({
-        required_error: "name is required",
+        required_error: "name is required!",
         invalid_type_error: "name must be a string!",
       })
       .min(3, "name must have at least 3 characters!")
@@ -12,15 +12,15 @@ export const userSchema = z
 
     email: z
       .string({
-        required_error: "email is required",
+        required_error: "email is required!",
         invalid_type_error: "email must be a string!",
       })
-      .email("email porrly formatted!")
+      .email("email poorly formatted!")
       .max(255, "max email length exceeded!"),
 
     password: z
       .string({
-        required_error: "password is required",
+        required_error: "password is required!",
         invalid_type_error: "password must be a string!",
       })
       .min(7, "password must have at least 7 characters!")
@@ -32,4 +32,4 @@ export const userSchema = z
   })
   .strict();
 
-export type UserDataType = z.infer<typeof userSchema>;
+export type UserDataTypes = z.infer<typeof userSchema>;
