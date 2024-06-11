@@ -2,7 +2,10 @@ import { randomUUID } from "node:crypto";
 import { appError } from "../errors/appError";
 import { TaskDataTypes } from "../validations/taskSchema";
 import { PaginationDataTypes } from "../validations/paginationSchema";
-import { CreateTaskDataTypes, UpdateTaskDataTypes } from "../repositories/taskRepository";
+import {
+  CreateTaskDataTypes,
+  UpdateTaskDataTypes,
+} from "../repositories/taskRepository";
 
 export type TaskDataCreate = TaskDataTypes & { user_id: string };
 export type UserTasksPagination = PaginationDataTypes & { userID: string };
@@ -10,8 +13,12 @@ export type UserTasksPagination = PaginationDataTypes & { userID: string };
 type Repository = {
   createTask(data: TaskDataCreate): Promise<CreateTaskDataTypes | undefined>;
   getTask(id: string): Promise<CreateTaskDataTypes | undefined>;
-  getTasks(data: UserTasksPagination): Promise<CreateTaskDataTypes[] | undefined>;
-  updateTask(data: UpdateTaskDataTypes): Promise<UpdateTaskDataTypes | undefined>;
+  getTasks(
+    data: UserTasksPagination
+  ): Promise<CreateTaskDataTypes[] | undefined>;
+  updateTask(
+    data: UpdateTaskDataTypes
+  ): Promise<UpdateTaskDataTypes | undefined>;
   deleteTaskByID(id: string): Promise<{ id: string } | undefined>;
 };
 
@@ -46,10 +53,18 @@ export const taskServices = {
       const { userID, limit, offset, filter } = data;
 
       if (!limit || !offset || !filter) {
-        throw appError("please inform query params limit, offset and filter!", 400);
+        throw appError(
+          "please inform query params limit, offset and filter!",
+          400
+        );
       }
 
-      const userTasks = await repository.getTasks({ userID, limit, offset, filter });
+      const userTasks = await repository.getTasks({
+        userID,
+        limit,
+        offset,
+        filter,
+      });
 
       return userTasks;
     } catch (error) {
@@ -61,11 +76,8 @@ export const taskServices = {
     try {
       const { title, description, date, status, user_id } = data;
 
-      if (new Date(date) < new Date()) {
-        throw appError("date cannot be before the current time!", 400);
-      }
-
       const task = await repository.getTask(id);
+
       if (!task) throw appError("task not found!", 404);
 
       if (task.user_id != user_id) {
