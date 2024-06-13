@@ -58,5 +58,5 @@ KEY_TOKEN=""
 
 ## Links
 
-- [Deploy](https://task-manager-seven-indol.vercel.app/)
+- [Deploy](https://task-manager-seven-beta.vercel.app/)
 - [Front Repository](https://github.com/OdilonEnrique/Task-Manager)
