@@ -16,9 +16,9 @@ app.use(express.json());
 app.use(cookieParser());
 
 const whiteList = [
-  "http://localhost:5173",
-  "http://127.0.0.1:5173",
-  "https://task-manager-seven-indol.vercel.app",
+  // "http://localhost:5173",
+  // "http://127.0.0.1:5173",
+  "task-manager-seven-beta.vercel.app",
 ];
 
 app.use(
